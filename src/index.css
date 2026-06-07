@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, #root { height: 100%; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #f4f6f9;
+    color: #1a2e4a;
+  }
+}
+
+@layer components {
+  .field-label {
+    @apply block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide;
+  }
+  .field-input {
+    @apply w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm
+           rounded-xl px-3 py-2.5 outline-none transition
+           focus:ring-2 focus:ring-nuba-cyan/20 focus:border-nuba-cyan/50
+           placeholder-slate-400;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+}
