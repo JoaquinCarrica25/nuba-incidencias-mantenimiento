@@ -67,12 +67,10 @@ export default function Calendario({ apartamento, apartamentos }) {
   // Mostrar hora exacta sin conversion de zona horaria
   const fmt = (f) => {
     if (!f) return "—";
-    const s = (f || "").slice(0, 16);
-    const partes = s.split("T");
-    const fecha = partes[0] || "";
-    const hora  = partes[1] || "";
-    const bits = fecha.split("-");
-    const y = bits[0], m = bits[1], d = bits[2];
+    const s = (f || "").slice(0, 16).replace("T", " ");
+    const [fecha, hora] = s.split(" ");
+    if (!fecha) return f;
+    const [y, m, d] = fecha.split("-");
     if (!d) return f;
     return hora ? d+"/"+m+"/"+y+" a las "+hora : d+"/"+m+"/"+y;
   };
