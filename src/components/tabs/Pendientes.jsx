@@ -122,10 +122,13 @@ export default function Pendientes({ apartamento, alertas, setAlertas }) {
   const fmtFecha = (f) => {
     if (!f) return "—";
     const s = (f || "").slice(0, 16);
-    const [fecha, hora] = s.split("T");
-    if (!fecha) return f;
-    const [y, m, d] = fecha.split("-");
-    return `${d}/${m}/${y} ${hora || ""}`;
+    const partes = s.split("T");
+    const fecha = partes[0] || "";
+    const hora  = partes[1] || "";
+    const bits = fecha.split("-");
+    const y = bits[0], m = bits[1], d = bits[2];
+    if (!d) return f;
+    return hora ? d+"/"+m+"/"+y+" a las "+hora : d+"/"+m+"/"+y;
   };
 
   if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-nuba-cyan/20 border-t-nuba-cyan rounded-full animate-spin" /></div>;

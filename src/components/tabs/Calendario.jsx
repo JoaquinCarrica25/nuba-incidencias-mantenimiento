@@ -67,10 +67,14 @@ export default function Calendario({ apartamento, apartamentos }) {
   // Mostrar hora exacta sin conversion de zona horaria
   const fmt = (f) => {
     if (!f) return "—";
-    const s = f.slice(0, 16);
-    const [fecha, hora] = s.split("T");
-    const [y, m, d] = fecha.split("-");
-    return d + "/" + m + "/" + y + " " + hora;
+    const s = (f || "").slice(0, 16);
+    const partes = s.split("T");
+    const fecha = partes[0] || "";
+    const hora  = partes[1] || "";
+    const bits = fecha.split("-");
+    const y = bits[0], m = bits[1], d = bits[2];
+    if (!d) return f;
+    return hora ? d+"/"+m+"/"+y+" a las "+hora : d+"/"+m+"/"+y;
   };
   const ahoraISO = new Date().toISOString().slice(0, 16);
   const proximas = reservas.filter(r => (r.fecha_salida || "").slice(0, 16) >= ahoraISO);

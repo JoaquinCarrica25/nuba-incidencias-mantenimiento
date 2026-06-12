@@ -6,10 +6,13 @@ import { useOcupacion } from "../../hooks/useOcupacion";
 function fmtFecha(f) {
   if (!f) return "—";
   const s = (f || "").slice(0, 16);
-  const [fecha, hora] = s.split("T");
-  if (!fecha) return f;
-  const [y, m, d] = fecha.split("-");
-  return `${d}/${m}/${y} ${hora || ""}`;
+  const partes = s.split("T");
+  const fecha = partes[0] || "";
+  const hora  = partes[1] || "";
+  const bits = fecha.split("-");
+  const y = bits[0], m = bits[1], d = bits[2];
+  if (!d) return f;
+  return hora ? d+"/"+m+"/"+y+" a las "+hora : d+"/"+m+"/"+y;
 }
 
 export default function BannerOcupacion({ apartamentoId }) {
