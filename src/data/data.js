@@ -1,16 +1,16 @@
 // ============================================================
-// NUBA INCIDENCIAS — Datos estáticos
+// NUBA INCIDENCIAS — Datos estáticos v2
 // ============================================================
 
 export const APARTAMENTOS_LISTA = [
   "ALMADEN", "CARRETAS", "CAVA ALTA", "CONCEPCIÓN", "COSTANILLA",
-  "FOMENTO", "IMPERIAL", "MAYOR", "MONTERA", "MORATIN", "MORERIA",
+  "FOMENTO", "IMPERIAL", "Mayor", "MONTERA", "MORATIN", "MORERIA",
   "MORENO NIETO", "NAVAS", "SAN BARTOLOME", "SAN MIGUEL", "TETUAN",
   "TORRECILLA", "VIRGEN DE LA PALOMA", "VALENCIA", "OLIVAR", "INFANTE",
   "ZURBANO", "ROBLEDO", "MOSTENSES", "ANTONIO LOPES"
 ];
 
-export const RESPONSABLES = ["Joaquín", "Oscar", "Técnico Externo"];
+export const RESPONSABLES = ["Joaquín", "Oscar", "Vanessa", "Técnico Externo"];
 
 export const URGENCIAS = [
   { value: "baja",  label: "Baja",  color: "bg-green-500",  text: "text-green-700",  bg: "bg-green-50",  border: "border-green-200" },
@@ -28,7 +28,7 @@ export const ALERTA_HORAS = [24, 48, 72];
 export const USUARIOS = {
   "logistica@nubagestion.es": {
     password: "Nuba2026",
-    nombre: "Oscar",
+    nombre: "Oscar / Vanessa",
     rol: "logistica",
   },
   "joaquin.carrica20@gmail.com": {

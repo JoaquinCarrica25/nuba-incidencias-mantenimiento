@@ -29,7 +29,15 @@ export default function Calendario({ apartamento, apartamentos }) {
   const guardar = async () => {
     if (!form.fecha_entrada || !form.fecha_salida || !apto) return;
     setSaving(true);
-    await supabase.from("reservas").insert({ apartamento_id: apto, ...form, huespedes: parseInt(form.huespedes) });
+    // Guardamos la fecha exacta como texto sin conversion UTC
+    const payload = {
+      apartamento_id: apto,
+      fecha_entrada: form.fecha_entrada + ":00",
+      fecha_salida: form.fecha_salida + ":00",
+      huespedes: parseInt(form.huespedes),
+      notas: form.notas,
+    };
+    await supabase.from("reservas").insert(payload);
     setForm({ fecha_entrada: "", fecha_salida: "", huespedes: 1, notas: "" });
     await cargar();
     setSaving(false);
@@ -56,10 +64,17 @@ export default function Calendario({ apartamento, apartamentos }) {
     await cargar();
   };
 
-  const fmt = (f) => f ? new Date(f).toLocaleString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
-  const hoy = new Date();
-  const proximas = reservas.filter(r => new Date(r.fecha_salida) >= hoy);
-  const pasadas  = reservas.filter(r => new Date(r.fecha_salida) < hoy);
+  // Mostrar hora exacta sin conversion de zona horaria
+  const fmt = (f) => {
+    if (!f) return "—";
+    const s = f.slice(0, 16);
+    const [fecha, hora] = s.split("T");
+    const [y, m, d] = fecha.split("-");
+    return d + "/" + m + "/" + y + " " + hora;
+  };
+  const ahoraISO = new Date().toISOString().slice(0, 16);
+  const proximas = reservas.filter(r => (r.fecha_salida || "").slice(0, 16) >= ahoraISO);
+  const pasadas  = reservas.filter(r => (r.fecha_salida || "").slice(0, 16) < ahoraISO);
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -152,7 +167,7 @@ export default function Calendario({ apartamento, apartamentos }) {
   );
 }
 
-function ReservaCard({ r, fmt, esAdmin, editando, formEdit, setFormEdit, onEdit, onSave, onCancel, onDelete, activa }) {
+function ReservaCard({ r, fmt, esAdmin, editando, formEdit, setFormEdit, onEdit, onSave, onCancel, onDelete, activa, averiasCount = 0 }) {
   const isEditing = editando === r.id;
   return (
     <div className={`bg-white rounded-2xl border p-4 ${activa ? "border-nuba-cyan/30" : "border-slate-200"}`}>
