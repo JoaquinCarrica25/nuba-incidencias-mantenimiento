@@ -2,7 +2,7 @@
 // NUBA INCIDENCIAS — Vista de Calendario Visual (estilo ICNEA)
 // ============================================================
 import { useState, useEffect, useRef } from "react";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../lib/supabase";
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const DIAS_SEMANA = ["D","L","M","X","J","V","S"];
