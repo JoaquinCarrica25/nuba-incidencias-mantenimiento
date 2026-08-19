@@ -144,7 +144,7 @@ export default function ImportadorICNEA({ apartamentos, onImportado }) {
           const { error: err } = await supabase.from("reservas").insert({
             apartamento_id: aptId,
             fecha_entrada:  res.checkin + " 14:00:00",
-            fecha_salida:   res.checkout + " 10:00:00",
+            fecha_salida:   res.checkout + " 11:00:00",
             huespedes:      1,
             notas:          res.huesped !== "?" ? `Huésped: ${res.huesped}` : "",
           });
@@ -177,7 +177,11 @@ export default function ImportadorICNEA({ apartamentos, onImportado }) {
             apartamento_id: aptId,
             descripcion:    descripcionCompleta,
             urgencia:       "media",
-            estado:         inc.estado === "Pending" ? "pendiente" : "resuelto",
+            estado:         (inc.estado === "Pending" || inc.estado === "pending" || !inc.estado) ? "pendiente" : "resuelta",
+            alerta_horas:   48,
+            responsable:    "",
+            observaciones:  "",
+            coste:          0,
             fecha_apertura: inc.fecha ? new Date(inc.fecha).toISOString() : new Date().toISOString(),
             patron_accion:  inc.tipo || "",
           });
